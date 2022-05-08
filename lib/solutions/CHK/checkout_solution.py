@@ -128,6 +128,9 @@ def checkout(skus: str) -> int:
                     new_count if new_count > 0 else 0
                 )
 
+        # Refresh count
+        count = grouped_items[item_name]
+
         # initial value, no discount
         value = product.price * count
 
@@ -159,5 +162,6 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
