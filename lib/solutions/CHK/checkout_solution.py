@@ -130,10 +130,14 @@ def checkout(skus: str) -> int:
                 min_basket_items = (
                     math.floor(count / special_offer.basket_quantity)
                     if special_offer.basket_quantity
-                    else 0
+                    else special_offer.min_quantity
                 )
                 ic(min_basket_items)
-                free_items = math.floor(count / special_offer.min_quantity)
+                free_items = min(
+                    math.floor(count / special_offer.min_quantity),
+                    min_basket_items
+                )
+                ic(free_items)
 
                 new_count = item_to_discount - free_items if item_to_discount else 0
                 grouped_items[special_offer.free_item] = (
@@ -174,10 +178,3 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
-
-
-
-
-
-
-
