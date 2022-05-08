@@ -8,6 +8,7 @@ from typing import Optional
 class SpecialOffer:
     quantity: int = 0
     offer: int = 0
+    free: Optional[str] = None
 
 
 @dataclasses.dataclass
@@ -37,6 +38,11 @@ STOCK = {
         name="A",
         value=15,
         special_offer=None,
+    ),
+    "E": Item(
+        name="E",
+        value=40,
+        special_offer=SpecialOffer(free="B"),
     ),
 }
 
@@ -70,3 +76,4 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+

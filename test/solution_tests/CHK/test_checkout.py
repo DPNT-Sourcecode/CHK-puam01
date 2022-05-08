@@ -12,6 +12,7 @@ from solutions.CHK import checkout_solution
         ("B", 30),
         ("C", 20),
         ("D", 15),
+        ("E", 40),
         ("AB", 80),  # two items
         ("AA", 100),  # A discount
         ("AAA", 130),  # A discount
@@ -24,3 +25,4 @@ from solutions.CHK import checkout_solution
 )
 def test_sum(skus: str, expected: int):
     assert checkout_solution.checkout(skus) == expected
+
