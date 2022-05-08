@@ -19,7 +19,9 @@ class SpecialOfferFree:
 class Item:
     name: str
     price: int
+    group_item: bool = False
     special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(
         default_factory=list
     )
     special_offer_free: List[SpecialOfferFree] = dataclasses.field(default_factory=list)
+

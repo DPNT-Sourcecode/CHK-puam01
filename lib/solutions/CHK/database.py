@@ -56,7 +56,7 @@ STOCK = {
     ),
     "K": Item(
         name="K",
-        price=80,
+        price=70,
         special_offer_quantity=[
             SpecialOfferQuantity(min_quantity=2, offer_price=150),
         ],
@@ -137,3 +137,4 @@ STOCK = {
         price=50,
     ),
 }
+
