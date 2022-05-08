@@ -12,6 +12,3 @@ from solutions.HLO import hello_solution
 )
 def test_sum(friend_name: str, expected: str):
     assert hello_solution.hello(friend_name) == expected
-
-
-
