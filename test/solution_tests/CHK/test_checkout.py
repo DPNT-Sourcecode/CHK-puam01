@@ -69,6 +69,9 @@ from solutions.CHK import checkout_solution
         ("U", 40),
         ("UUU", 120),
         ("UUUU", 120),  # Free U
+        ("V", 50),
+        ("VV", 90),
+        ("VVV", 130),
         ("S", 30),
         ("T", 20),
         ("W", 20),
@@ -91,6 +94,7 @@ def test_checkout(skus: str, expected: int):
 )
 def test_allowed_keys(items, expected):
     assert checkout_solution.all_items_allowed(items) == expected
+
 
 
 
