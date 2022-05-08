@@ -8,7 +8,9 @@ STOCK = {
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
+    products = skus.split()
     return -1
+
 
 
 
