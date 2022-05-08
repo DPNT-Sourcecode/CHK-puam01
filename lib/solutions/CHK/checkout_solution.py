@@ -118,8 +118,3 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
-
-
-
-
-
