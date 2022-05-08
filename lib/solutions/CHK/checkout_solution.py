@@ -87,7 +87,6 @@ def process_quantity_offer(
     return discounted_price, remaining_items
 
 
-from icecream import ic
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -125,19 +124,16 @@ def checkout(skus: str) -> int:
 
                 item_to_discount = grouped_items.get(special_offer.free_item)
 
-                ic(count)
                 # Check full basket item quantity fit in count
                 min_basket_items = (
                     math.floor(count / special_offer.basket_quantity)
                     if special_offer.basket_quantity
                     else special_offer.min_quantity
                 )
-                ic(min_basket_items)
                 free_items = min(
                     math.floor(count / special_offer.min_quantity),
                     min_basket_items
                 )
-                ic(free_items)
 
                 new_count = item_to_discount - free_items if item_to_discount else 0
                 grouped_items[special_offer.free_item] = (
@@ -178,3 +174,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
