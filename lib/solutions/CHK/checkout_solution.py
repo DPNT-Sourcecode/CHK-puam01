@@ -10,9 +10,25 @@ from .database import STOCK
 ALLOWED_ITEMS = set(STOCK.keys())
 
 
-def items_process_order(items: Dict[str, Item]):
+def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
+    items_with_free_offer = []
+    items_with_quantity_offer = []
+    normal_items = []
+    for item in items.values():
+        if item.special_offer_free:
+            items_with_free_offer.append(item.name)
+        elif item.special_offer_quantity:
+            items_with_quantity_offer.append(item.name)
+        else:
+            normal_items.append(item.name)
 
-PROCESS_ITEMS_ORDER = ("F", "E", "A", "B", "C", "D")
+    return tuple(
+        items_with_free_offer + items_with_quantity_offer + normal_items
+    )
+
+
+PROCESS_ITEMS_ORDER = items_process_order(STOCK)
+print(PROCESS_ITEMS_ORDER)
 
 
 def all_items_allowed(items: set) -> bool:
@@ -118,3 +134,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
