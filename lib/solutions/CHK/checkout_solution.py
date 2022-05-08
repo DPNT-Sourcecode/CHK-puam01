@@ -87,8 +87,7 @@ def checkout(skus: str) -> int:
         if special_offer:
             if special_offer.free_item:
                 free_item_count = grouped_items.get(special_offer.free_item)
-                discounted_items = count * - 1
-                new_count = free_item_count - discounted_items if free_item_count else 0
+                new_count = free_item_count - count if free_item_count else 0
                 grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
 
             if special_offer.quantity:
@@ -107,6 +106,7 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
 
