@@ -66,6 +66,50 @@ def process_quantity_offer(
     return discounted_price, remaining_items
 
 
+def process_group_items(items_count_by_name: Dict[str, int]) -> int:
+    """Process items that have different prices but can be grouped in a discount."""
+
+    # Select all items that can be grouped
+    grouped_items_count = [
+        {"item_name": item_name, "count": count, "price": STOCK[item_name].price}
+        for item_name, count in items_count_by_name.items()
+        if item_name in GROUP_ITEMS
+    ]
+
+    # Get the most expensive items first
+    grouped_items_count = sorted(
+        grouped_items_count,
+        key=lambda item: item.get("price"),
+        reverse=True,
+    )
+
+    total_items = 0
+    partial_sum = 0
+    times_discount_applied = 0
+
+    for item in grouped_items_count:
+
+        total_items += item["count"]
+        total_discount_items = math.floor(total_items / MIN_GROUP_ITEMS)
+
+        discount_items_changed = False
+        # Everytime the total number of items with discount change we
+        # reset the partial price
+        if times_discount_applied != total_discount_items:
+            discount_items_changed = True
+            times_discount_applied = total_discount_items
+            partial_sum = GROUP_ITEMS_PRICE
+
+        # number of items outside of the discount
+        remaining_items = total_items - (total_discount_items * MIN_GROUP_ITEMS)
+        # initial value, no discount
+        value = item["price"] * (
+            remaining_items if discount_items_changed else item["count"]
+        )
+        partial_sum += value
+    return partial_sum
+
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -150,41 +194,6 @@ def checkout(skus: str) -> int:
 
         total += value
 
-    grouped_items_count = [
-        {"item_name": item_name, "count": count, "price": STOCK[item_name].price}
-        for item_name, count in items_count_by_name.items()
-        if item_name in GROUP_ITEMS
-    ]
-
-    # Get the most expensive items first
-    grouped_items_count = sorted(
-        grouped_items_count,
-        key=lambda item: item.get("price"),
-        reverse=True,
-    )
-
-    total_items = 0
-    partial_sum = 0
-    times_discount_applied = 0
-
-    for item in grouped_items_count:
-
-        total_items += item["count"]
-        total_discount_items = math.floor(total_items / MIN_GROUP_ITEMS)
-
-        discount_items_changed = False
-        # Everytime the total number of items with discount change we
-        # reset the partial price
-        if times_discount_applied != total_discount_items:
-            discount_items_changed = True
-            times_discount_applied = total_discount_items
-            partial_sum = GROUP_ITEMS_PRICE
-
-        # number of items outside of the discount
-        remaining_items = total_items - (total_discount_items * MIN_GROUP_ITEMS)
-        # initial value, no discount
-        value = item["price"] * (remaining_items if discount_items_changed else item["count"])
-        partial_sum += value
-
-    total += partial_sum
+    total += process_group_items(items_count_by_name)
     return total
+
