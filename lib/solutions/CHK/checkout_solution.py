@@ -1,4 +1,5 @@
 import dataclasses
+from collections import Counter
 from typing import Optional
 
 
@@ -43,13 +44,17 @@ STOCK = {
 # skus = unicode string
 def checkout(skus: str) -> int:
     total = 0
+
+    # Counter will give the count of each product
+    grouped_items = Counter(skus)
     for item in skus:
         try:
-            value = STOCK[item]
+            product = STOCK[item]
         except KeyError:
             return -1
-        total += value
+        total += product.value
     return total
+
 
 
 
