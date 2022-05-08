@@ -172,13 +172,19 @@ def checkout(skus: str) -> int:
         total_items += item["count"]
         discounted_items = math.floor(total_items / MIN_GROUP_ITEMS)
         discounted_price = discounted_items * GROUP_ITEMS_PRICE
+        ic(discounted_price)
 
         # number of items outside of the discount
         remaining_items = total_items - (discounted_items * MIN_GROUP_ITEMS)
+        ic(remaining_items)
         # initial value, no discount
         value = item["price"] * remaining_items
+        ic(value)
         partial_sum += value + discounted_price
+        ic(partial_sum)
 
+    total += partial_sum
     return total
+
 
 
