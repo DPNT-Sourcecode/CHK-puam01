@@ -1,4 +1,5 @@
 import dataclasses
+import math
 from collections import Counter
 from typing import Optional
 
@@ -57,13 +58,14 @@ def checkout(skus: str) -> int:
         count = grouped_items[item_name]
         # check special offers
         if product.special_offer and count > product.special_offer.quantity:
+            number_of_discount = math.floor(count / product.special_offer.quantity)
             value = int(
-                    (count / product.special_offer.quantity)
-                    * product.special_offer.offer
+                (count / product.special_offer.quantity) * product.special_offer.offer
             )
         else:
             value = product.value * count
         total += value
     return total
+
 
 
