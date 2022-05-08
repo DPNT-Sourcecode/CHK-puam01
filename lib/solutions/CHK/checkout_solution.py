@@ -112,6 +112,9 @@ def checkout(skus: str) -> int:
         except KeyError:
             return -1
 
+        # Process free special offers. Bear in mind that you can have special
+        # offers that will give a free product when you buy x amount of the
+        # same item, so it must be processed before the quantities
         if product.special_offer_free:
             for special_offer in product.special_offer_free:
                 # There's a requirement of a minimum basket items
@@ -161,6 +164,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
