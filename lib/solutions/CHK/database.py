@@ -105,7 +105,13 @@ STOCK = {
         name="T",
         price=20,
     ),
-    # U
+    "U": Item(
+        name="U",
+        price=40,
+        special_offer_free=[
+            SpecialOfferFree(min_quantity=3, basket_quantity=4, free_item="U")
+        ],
+    ),
     # V
     "W": Item(
         name="W",
@@ -124,5 +130,6 @@ STOCK = {
         price=50,
     ),
 }
+
 
 
