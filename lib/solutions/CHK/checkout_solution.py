@@ -148,7 +148,6 @@ def checkout(skus: str) -> int:
 
         total += value
 
-
     for item_name in GROUP_ITEMS:
         # Get the count from grouped items and process if any
         count = grouped_items.get(item_name)
@@ -162,5 +161,7 @@ def checkout(skus: str) -> int:
 
         # initial value, no discount
         value = product.price * count
+        total += value
 
     return total
+
