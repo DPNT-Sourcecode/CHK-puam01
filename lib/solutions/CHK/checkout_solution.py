@@ -70,12 +70,12 @@ def process_quantity_offer(
 ) -> Tuple[int, int]:
     # Get number of discounted items if there's an offer
     discounted_items = math.floor(count / special_offer.min_quantity)
-    items_with_offer = discounted_items * special_offer.offer_price
+    discounted_price = discounted_items * special_offer.offer_price
 
     # number of items outside of the discount
     remaining_items = count - (discounted_items * special_offer.min_quantity)
 
-    return items_with_offer, remaining_items
+    return discounted_price, remaining_items
 
 
 # noinspection PyUnusedLocal
@@ -117,9 +117,9 @@ def checkout(skus: str) -> int:
             quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
 
             for min_quantity in quantities:
-                    process_quantity_offer(
+                discount_price, remaining_items = process_quantity_offer(
                         special_offer=special_offer,
-                        count=count,
+                        count=remaining_items,
                 )
 
             value = int(value)
@@ -134,4 +134,5 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
