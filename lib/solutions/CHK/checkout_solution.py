@@ -37,12 +37,10 @@ STOCK = {
     "C": Item(
         name="A",
         value=20,
-        special_offer=None,
     ),
     "D": Item(
         name="A",
         value=15,
-        special_offer=None,
     ),
     "E": Item(
         name="E",
@@ -60,6 +58,33 @@ PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
 def all_items_allowed(items: set) -> bool:
     """Make sure all items are allowed."""
     return len(items - ALLOWED_ITEMS) == 0
+
+
+def process_special_offer(special_offer: SpecialOffer) -> int:
+    if special_offer.free_item:
+        free_item_count = grouped_items.get(special_offer.free_item)
+        free_items = math.floor(count / special_offer.quantity)
+
+        new_count = free_item_count - free_items if free_item_count else 0
+        grouped_items[special_offer.free_item] = (
+            new_count if new_count > 0 else 0
+        )
+
+    # Get number of discounted items if there's an offer
+    discounted_items = (
+        math.floor(count / special_offer.quantity) if special_offer.offer else 0
+    )
+    print(discounted_items)
+    items_with_offer = discounted_items * special_offer.offer
+    print(items_with_offer)
+
+    # number of items outside of the discount
+    remaining_products = count - (discounted_items * special_offer.quantity)
+    print(remaining_products)
+
+    items_without_offer = remaining_products * product.value
+    print(items_without_offer)
+    value = int(items_with_offer + items_without_offer)
 
 
 # noinspection PyUnusedLocal
@@ -92,32 +117,9 @@ def checkout(skus: str) -> int:
         special_offer = product.special_offer
         # check special offers
         if special_offer and count >= special_offer.quantity:
-            if special_offer.free_item:
-                free_item_count = grouped_items.get(special_offer.free_item)
-                free_items = math.floor(count / special_offer.quantity)
-
-                new_count = free_item_count - free_items if free_item_count else 0
-                grouped_items[special_offer.free_item] = (
-                    new_count if new_count > 0 else 0
-                )
-
-            # Get number of discounted items if there's an offer
-            discounted_items = (
-                math.floor(count / special_offer.quantity) if special_offer.offer else 0
-            )
-            print(discounted_items)
-            items_with_offer = discounted_items * special_offer.offer
-            print(items_with_offer)
-
-            # number of items outside of the discount
-            remaining_products = count - (discounted_items * special_offer.quantity)
-            print(remaining_products)
-
-            items_without_offer = remaining_products * product.value
-            print(items_without_offer)
-            value = int(items_with_offer + items_without_offer)
 
         else:
             value = product.value * count
         total += value
     return total
+
