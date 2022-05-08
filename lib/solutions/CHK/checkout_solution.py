@@ -14,6 +14,7 @@ class SpecialOfferQuantity:
 @dataclasses.dataclass
 class SpecialOfferFree:
     min_quantity: int = 0
+    basket_quantity: int = 0
     free_item: str = ""
 
 
@@ -53,6 +54,11 @@ STOCK = {
         name="E",
         price=40,
         special_offer_free=[SpecialOfferFree(min_quantity=2, free_item="B")],
+    ),
+    "F": Item(
+        name="F",
+        price=10,
+        special_offer_free=[SpecialOfferFree(min_quantity=2, free_item="F")],
     ),
 }
 
@@ -148,5 +154,6 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
