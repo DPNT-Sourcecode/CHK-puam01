@@ -39,6 +39,11 @@ from solutions.CHK import checkout_solution
         ("FFFFFF", 40),  # not a multiple of 3, so only 1 item is free
         ("G", 20),
         ("H", 10),
+        ("HHHHH", 45),  # 5 discount H
+        ("HHHHHH", 55),  # 5 discount + 1 H
+        ("HHHHHHHHHH", 80),  # 10 discount H
+        ("HHHHHHHHHHH", 90),  # 10 discount H
+        ("HHHHHHHHHHHHHHH", 90),  # 10 + 5 discount H
         ("I", 35),
         ("J", 60),
         ("L", 90),
@@ -66,6 +71,7 @@ def test_checkout(skus: str, expected: int):
 )
 def test_allowed_keys(items, expected):
     assert checkout_solution.all_items_allowed(items) == expected
+
 
 
 
