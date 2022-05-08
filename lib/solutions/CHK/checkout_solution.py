@@ -128,8 +128,3 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
-
-
-
-
-
