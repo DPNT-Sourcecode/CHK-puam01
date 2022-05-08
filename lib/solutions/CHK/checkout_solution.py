@@ -16,10 +16,26 @@ class Item:
 
 
 STOCK = {
-    "A": Item(name="A", value=50, special_offer=SpecialOffer(quantity=3, offer=130)),
-    "B": Item(name="A", value=30, special_offer=SpecialOffer(quantity=2, offer=45)),
-    "C": Item(name="A", value=20, special_offer=None),
-    "D": Item(name="A", value=15, special_offer=None),
+    "A": Item(
+        name="A",
+        value=50,
+        special_offer=SpecialOffer(quantity=3, offer=130),
+    ),
+    "B": Item(
+        name="A",
+        value=30,
+        special_offer=SpecialOffer(quantity=2, offer=45),
+    ),
+    "C": Item(
+        name="A",
+        value=20,
+        special_offer=None,
+    ),
+    "D": Item(
+        name="A",
+        value=15,
+        special_offer=None,
+    ),
 }
 
 
@@ -27,12 +43,13 @@ STOCK = {
 # skus = unicode string
 def checkout(skus: str) -> int:
     total = 0
-    for product in skus:
+    for item in skus:
         try:
-            value = STOCK[product]
+            value = STOCK[item]
         except KeyError:
             return -1
         total += value
     return total
+
 
 
