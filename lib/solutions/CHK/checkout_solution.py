@@ -65,9 +65,19 @@ def all_items_allowed(items: set) -> bool:
 
 
 def process_quantity_offer(
-    special_offer: SpecialOfferQuantity,
+    item: Item,
     count: int,
 ) -> Tuple[int, int]:
+    value = math.inf
+
+    quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
+
+    for min_quantity in quantities:
+        discounted_items, remaining_items = process_quantity_offer(
+                special_offer=special_offer,
+                count=count,
+        )
+
     # Get number of discounted items if there's an offer
     discounted_items = math.floor(count / special_offer.min_quantity)
     items_with_offer = discounted_items * special_offer.offer_price
@@ -111,16 +121,6 @@ def checkout(skus: str) -> int:
 
         # check special offers
         if product.special_offer_quantity:
-            value = math.inf
-
-            quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
-
-            for special_offer in product.special_offer_quantity:
-                    process_quantity_offer(
-                        special_offer=special_offer,
-                        count=count,
-                )
-
             value = int(value)
 
         if product.special_offer_free:
@@ -133,3 +133,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
