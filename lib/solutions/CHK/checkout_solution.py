@@ -1,4 +1,5 @@
 import dataclasses
+from typing import Optional
 
 
 @dataclasses.dataclass
@@ -11,14 +12,14 @@ class SpecialOffer:
 class Item:
     name: str
     value: int
-    special_offer: SpecialOffer
+    special_offer: Optional[SpecialOffer] = None
 
 
 STOCK = {
-    "A": 50,
-    "B": 30,
-    "C": 20,
-    "D": 15,
+    "A": Item(name="A", value=50, special_offer=SpecialOffer(quantity=3, offer=130)),
+    "B": Item(name="A", value=30, special_offer=SpecialOffer(quantity=2, offer=45)),
+    "C": Item(name="A", value=20, special_offer=None),
+    "D": Item(name="A", value=15, special_offer=None),
 }
 
 
@@ -33,4 +34,5 @@ def checkout(skus: str) -> int:
             return -1
         total += value
     return total
+
 
