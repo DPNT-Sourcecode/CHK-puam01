@@ -86,7 +86,6 @@ def process_quantity_offer(
 
     return discounted_price, remaining_items
 
-
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -162,6 +161,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
