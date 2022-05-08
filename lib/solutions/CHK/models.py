@@ -24,4 +24,3 @@ class Item:
         default_factory=list
     )
     special_offer_free: List[SpecialOfferFree] = dataclasses.field(default_factory=list)
-

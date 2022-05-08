@@ -142,6 +142,3 @@ STOCK = {
         group_item=True,
     ),
 }
-
-
-

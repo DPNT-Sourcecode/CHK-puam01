@@ -42,6 +42,9 @@ def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
 PROCESS_ITEMS_ORDER = items_process_order(STOCK)
 
 
+GROUP_ITEMS = tuple([item.name for item in STOCK.values() if item.group_item])
+
+
 def all_items_allowed(items: set) -> bool:
     """Make sure all items are allowed."""
     return len(items - ALLOWED_ITEMS) == 0
@@ -144,5 +147,20 @@ def checkout(skus: str) -> int:
                 value += remaining_items * product.price
 
         total += value
-    return total
 
+
+    for item_name in GROUP_ITEMS:
+        # Get the count from grouped items and process if any
+        count = grouped_items.get(item_name)
+        if not count:
+            continue
+
+        try:
+            product = STOCK[item_name]
+        except KeyError:
+            return -1
+
+        # initial value, no discount
+        value = product.price * count
+
+    return total
