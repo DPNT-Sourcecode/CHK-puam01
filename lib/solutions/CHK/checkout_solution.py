@@ -111,7 +111,8 @@ def checkout(skus: str) -> int:
 
         # check special offers
         if product.special_offer_quantity:
-            value = math.inf
+            value = 0
+            remaining_items = count
 
             quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
 
@@ -133,3 +134,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
