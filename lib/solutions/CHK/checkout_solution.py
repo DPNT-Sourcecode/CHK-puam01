@@ -70,18 +70,18 @@ def checkout(skus: str) -> int:
     total = 0
 
     # Counter will give the count of each item
-    grouped_items = Counter(skus)
+    items_count_by_name = Counter(skus)
 
     # Make sure all items are alloed
-    items = set(grouped_items.keys())
+    items = set(items_count_by_name.keys())
     if not all_items_allowed(items):
         return -1
 
     # We need to process the items that have free special offer first,
     # so the order is import
     for item_name in PROCESS_ITEMS_ORDER:
-        # Get the count from grouped items and process if any
-        count = grouped_items.get(item_name)
+        # Get the count of this item if any
+        count = items_count_by_name.get(item_name)
         if not count:
             continue
 
@@ -99,7 +99,7 @@ def checkout(skus: str) -> int:
                 if count < special_offer.basket_quantity:
                     continue
 
-                item_to_discount = grouped_items.get(special_offer.free_item)
+                item_to_discount = items_count_by_name.get(special_offer.free_item)
 
                 # If we have minimum basket items, check how many
                 # of them fits in count, otherwise use the min_quantity
@@ -110,12 +110,12 @@ def checkout(skus: str) -> int:
                 )
 
                 new_count = item_to_discount - free_items if item_to_discount else 0
-                grouped_items[special_offer.free_item] = (
+                items_count_by_name[special_offer.free_item] = (
                     new_count if new_count > 0 else 0
                 )
 
         # Refresh count
-        count = grouped_items[item_name]
+        count = items_count_by_name[item_name]
 
         # initial value, no discount
         value = product.price * count
@@ -150,7 +150,7 @@ def checkout(skus: str) -> int:
 
     for item_name in GROUP_ITEMS:
         # Get the count from grouped items and process if any
-        count = grouped_items.get(item_name)
+        count = items_count_by_name.get(item_name)
         if not count:
             continue
 
@@ -164,4 +164,5 @@ def checkout(skus: str) -> int:
         total += value
 
     return total
+
 
