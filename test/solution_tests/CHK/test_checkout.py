@@ -19,7 +19,7 @@ from solutions.CHK import checkout_solution
         ("AAAA", 180),  # 4 items with discount
         ("AAAAA", 200),
         ("AAAAAA", 250),  # A 5 items discount
-        ("AAAAAAAA", 330),  # A discount
+        ("AAAAAAAA", 330),  # 5 then 3
         ("AAAAAAAAA", 380),  # A discount
         ("BB", 45),  # B discount
         ("AAABB", 175),
@@ -45,4 +45,5 @@ def test_sum(skus: str, expected: int):
 )
 def test_allowed_keys(items, expected):
     assert checkout_solution.all_items_allowed(items) == expected
+
 
