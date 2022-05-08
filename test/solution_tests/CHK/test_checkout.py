@@ -35,6 +35,7 @@ def test_sum(skus: str, expected: int):
         ({"x", "B", "C"}, False),
     )
 )
-def test_allowed_keys(allowed, items, expected):
+def test_allowed_keys(items, expected):
     assert checkout_solution.all_items_allowed(items) == expected
+
 

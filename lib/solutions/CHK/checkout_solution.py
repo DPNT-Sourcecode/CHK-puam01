@@ -63,6 +63,7 @@ def checkout(skus: str) -> int:
     # Counter will give the count of each item
     grouped_items = Counter(skus)
 
+    # Make sure all items are alloed
     items = set(grouped_items.keys())
     if not all_items_allowed(items):
         return -1
@@ -83,17 +84,19 @@ def checkout(skus: str) -> int:
         count = grouped_items[item_name]
         special_offer = product.special_offer
         # check special offers
-        if special_offer and special_offer.quantity and count >= special_offer.quantity:
-            discounted_items = math.floor(count / special_offer.quantity)
+        if special_offer:
+            if special_offer.quantity and count >= special_offer.quantity:
+                discounted_items = math.floor(count / special_offer.quantity)
 
-            # number of items outside of the discount
-            remaining_products = count - (discounted_items * special_offer.quantity)
+                # number of items outside of the discount
+                remaining_products = count - (discounted_items * special_offer.quantity)
 
-            items_without_offer = remaining_products * product.value
-            items_with_offer = discounted_items * special_offer.offer
-            value = int(items_with_offer + items_without_offer)
+                items_without_offer = remaining_products * product.value
+                items_with_offer = discounted_items * special_offer.offer
+                value = int(items_with_offer + items_without_offer)
         else:
             value = product.value * count
         total += value
     return total
+
 
