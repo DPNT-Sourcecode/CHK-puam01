@@ -66,7 +66,6 @@ def process_quantity_offer(
     return discounted_price, remaining_items
 
 
-from icecream import ic
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -177,28 +176,15 @@ def checkout(skus: str) -> int:
         # Everytime the total number of items with discount change we
         # reset the partial price
         if times_discount_applied != total_discount_items:
-            ic("discount applied changed")
             discount_items_changed = True
             times_discount_applied = total_discount_items
             partial_sum = GROUP_ITEMS_PRICE
 
         # number of items outside of the discount
         remaining_items = total_items - (total_discount_items * MIN_GROUP_ITEMS)
-        ic(remaining_items)
         # initial value, no discount
         value = item["price"] * (remaining_items if discount_items_changed else item["count"])
-        ic(value)
         partial_sum += value
-        ic(partial_sum)
 
     total += partial_sum
     return total
-
-
-
-
-
-
-
-
-
