@@ -28,7 +28,6 @@ def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
 
 
 PROCESS_ITEMS_ORDER = items_process_order(STOCK)
-print(PROCESS_ITEMS_ORDER)
 
 
 def all_items_allowed(items: set) -> bool:
@@ -134,4 +133,5 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 

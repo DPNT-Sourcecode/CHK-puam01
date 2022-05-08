@@ -29,10 +29,15 @@ STOCK = {
     ),
     "F": Item(
         name="F",
-        price=0,
+        price=10,
         special_offer_free=[
             SpecialOfferFree(min_quantity=2, basket_quantity=3, free_item="F")
         ],
     ),
+    "G": Item(
+        name="G",
+        price=20,
+    ),
 }
+
 
