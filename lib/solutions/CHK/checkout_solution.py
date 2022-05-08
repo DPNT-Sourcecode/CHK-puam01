@@ -124,15 +124,12 @@ def checkout(skus: str) -> int:
 
                 item_to_discount = grouped_items.get(special_offer.free_item)
 
-                # Check full basket item quantity fit in count
-                min_basket_items = (
+                # If we have minimum basket items, check how many
+                # of them fits in count, otherwise use the min_quantity
+                free_items = (
                     math.floor(count / special_offer.basket_quantity)
                     if special_offer.basket_quantity
-                    else special_offer.min_quantity
-                )
-                free_items = min(
-                    math.floor(count / special_offer.min_quantity),
-                    min_basket_items
+                    else math.floor(count / special_offer.min_quantity)
                 )
 
                 new_count = item_to_discount - free_items if item_to_discount else 0
@@ -174,4 +171,5 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
