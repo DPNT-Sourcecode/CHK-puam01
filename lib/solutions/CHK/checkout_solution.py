@@ -118,6 +118,7 @@ def checkout(skus: str) -> int:
         # check special offers
         if special_offers:
             value = math.inf
+
             for special_offer in special_offers:
                 value = min(value, process_special_offer(special_offer))
 
@@ -127,5 +128,6 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
