@@ -1,7 +1,7 @@
 import dataclasses
 import math
 from collections import Counter
-from typing import Optional
+from typing import List, Optional
 
 
 @dataclasses.dataclass
@@ -15,19 +15,24 @@ class SpecialOffer:
 class Item:
     name: str
     value: int
-    special_offer: Optional[SpecialOffer] = None
+    special_offer: List[SpecialOffer] = []
 
 
 STOCK = {
     "A": Item(
         name="A",
         value=50,
-        special_offer=SpecialOffer(quantity=3, offer=130),
+        special_offer=[
+            SpecialOffer(quantity=3, offer=130),
+            SpecialOffer(quantity=5, offer=200)
+        ],
     ),
     "B": Item(
         name="A",
         value=30,
-        special_offer=SpecialOffer(quantity=2, offer=45),
+        special_offer=[
+            SpecialOffer(quantity=2, offer=45)
+        ],
     ),
     "C": Item(
         name="A",
@@ -42,7 +47,9 @@ STOCK = {
     "E": Item(
         name="E",
         value=40,
-        special_offer=SpecialOffer(quantity=2, free_item="B"),
+        special_offer=[
+            SpecialOffer(quantity=2, free_item="B")
+        ],
     ),
 }
 
@@ -114,8 +121,3 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
-
-
-
-
-
