@@ -119,7 +119,6 @@ def checkout(skus: str) -> int:
                 [item for item in product.special_offer_quantity],
                 key=operator.attrgetter("min_quantity"),
             )
-            print(sorted_offers)
 
             for special_offer in sorted_offers:
                 discount_price, remaining_items = process_quantity_offer(
@@ -127,9 +126,9 @@ def checkout(skus: str) -> int:
                         count=remaining_items,
                 )
                 value += discount_price
+                print(item_name, discount_price, value)
 
             value = int(value)
-            print(item_name, value, remaining_items)
             if remaining_items:
                 value += remaining_items * product.price
 
@@ -143,6 +142,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
