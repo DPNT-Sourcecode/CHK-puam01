@@ -166,6 +166,7 @@ def checkout(skus: str) -> int:
 
     total_items = 0
     partial_sum = 0
+    times_offer_applied = 0
 
     for item in grouped_items_count:
 
@@ -185,6 +186,7 @@ def checkout(skus: str) -> int:
 
     total += partial_sum
     return total
+
 
 
 
