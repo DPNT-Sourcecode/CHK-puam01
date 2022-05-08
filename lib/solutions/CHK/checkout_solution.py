@@ -24,15 +24,13 @@ STOCK = {
         value=50,
         special_offer=[
             SpecialOffer(quantity=3, offer=130),
-            SpecialOffer(quantity=5, offer=200)
+            SpecialOffer(quantity=5, offer=200),
         ],
     ),
     "B": Item(
         name="A",
         value=30,
-        special_offer=[
-            SpecialOffer(quantity=2, offer=45)
-        ],
+        special_offer=[SpecialOffer(quantity=2, offer=45)],
     ),
     "C": Item(
         name="A",
@@ -45,9 +43,7 @@ STOCK = {
     "E": Item(
         name="E",
         value=40,
-        special_offer=[
-            SpecialOffer(quantity=2, free_item="B")
-        ],
+        special_offer=[SpecialOffer(quantity=2, free_item="B")],
     ),
 }
 
@@ -60,15 +56,15 @@ def all_items_allowed(items: set) -> bool:
     return len(items - ALLOWED_ITEMS) == 0
 
 
-def process_special_offer(special_offer: SpecialOffer) -> int:
+def process_special_offer(
+    special_offer: SpecialOffer, product: Item, count: int, grouped_items: Counter
+) -> int:
     if special_offer.free_item:
         free_item_count = grouped_items.get(special_offer.free_item)
         free_items = math.floor(count / special_offer.quantity)
 
         new_count = free_item_count - free_items if free_item_count else 0
-        grouped_items[special_offer.free_item] = (
-            new_count if new_count > 0 else 0
-        )
+        grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
 
     # Get number of discounted items if there's an offer
     discounted_items = (
@@ -84,7 +80,7 @@ def process_special_offer(special_offer: SpecialOffer) -> int:
 
     items_without_offer = remaining_products * product.value
     print(items_without_offer)
-    value = int(items_with_offer + items_without_offer)
+    return int(items_with_offer + items_without_offer)
 
 
 # noinspection PyUnusedLocal
@@ -120,7 +116,15 @@ def checkout(skus: str) -> int:
             value = math.inf
 
             for special_offer in special_offers:
-                value = min(value, process_special_offer(special_offer))
+                value = min(
+                    value,
+                    process_special_offer(
+                        special_offer=special_offer,
+                        count=count,
+                        product=product,
+                        grouped_items=grouped_items,
+                    ),
+                )
 
             value = int(value)
 
@@ -128,6 +132,7 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
 
