@@ -58,13 +58,11 @@ def checkout(skus: str) -> int:
         # check special offers
         if product.special_offer and count % product.special_offer.quantity == 0:
             value = int(
-                count
-                * (
                     (count / product.special_offer.quantity)
                     * product.special_offer.offer
-                )
             )
         else:
             value = product.value * count
         total += value
     return total
+
