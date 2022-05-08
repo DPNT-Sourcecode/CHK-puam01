@@ -48,7 +48,6 @@ def checkout(skus: str) -> int:
     # Counter will give the count of each item
     grouped_items = Counter(skus)
 
-    print(grouped_items)
     for item_name in grouped_items:
         try:
             product = STOCK[item_name]
@@ -57,17 +56,15 @@ def checkout(skus: str) -> int:
 
         count = grouped_items[item_name]
         # check special offers
-        if product.special_offer and count % product.special_offer.quantity:
-            value = int(count * ((count / product.special_offer.quantity) * product.special_offer.offer))
+        if product.special_offer and count % product.special_offer.quantity == 0:
+            value = int(
+                count
+                * (
+                    (count / product.special_offer.quantity)
+                    * product.special_offer.offer
+                )
+            )
         else:
             value = product.value * count
         total += value
     return total
-
-
-
-
-
-
-
-
