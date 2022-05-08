@@ -1,31 +1,10 @@
-import dataclasses
 import math
 import operator
 from collections import Counter
 from typing import List, Optional, Tuple
 
+from .models import item, SpecialOfferQuantity, SpecialOfferFree
 
-@dataclasses.dataclass
-class SpecialOfferQuantity:
-    min_quantity: int = 0
-    offer_price: int = 0
-
-
-@dataclasses.dataclass
-class SpecialOfferFree:
-    min_quantity: int = 0
-    basket_quantity: int = 0
-    free_item: str = ""
-
-
-@dataclasses.dataclass
-class Item:
-    name: str
-    price: int
-    special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(
-        default_factory=list
-    )
-    special_offer_free: List[SpecialOfferFree] = dataclasses.field(default_factory=list)
 
 
 STOCK = {
@@ -171,5 +150,6 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
