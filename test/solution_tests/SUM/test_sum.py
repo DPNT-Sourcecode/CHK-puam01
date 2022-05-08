@@ -13,6 +13,3 @@ from solutions.SUM import sum_solution
 )
 def test_sum(x: int, y: int, expected: int):
     assert sum_solution.compute(x, y) == expected
-
-
-
