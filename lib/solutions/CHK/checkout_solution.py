@@ -150,17 +150,17 @@ def checkout(skus: str) -> int:
         total += value
 
     grouped_items_count = [
-        {item_name: {"count": count, "price": STOCK[item_name].price}}
+        {"item_name": item_name, "count": count, "price": STOCK[item_name].price}
         for item_name, count in items_count_by_name.items()
         if item_name in GROUP_ITEMS
     ]
-    ic(grouped_items_count)
+
+    # Get the most expensive items first
     grouped_items_count = sorted(
         grouped_items_count,
-        key=operator.attrgetter("price"),
+        key=lambda item: item.get("price"),
         reverse=True,
     )
-    ic(grouped_items_count)
     for item_name in GROUP_ITEMS:
         # Get the count from grouped items and process if any
         count = items_count_by_name.get(item_name)
@@ -177,6 +177,7 @@ def checkout(skus: str) -> int:
         total += value
 
     return total
+
 
 
 
