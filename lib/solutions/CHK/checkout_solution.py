@@ -39,9 +39,7 @@ STOCK = {
     "B": Item(
         name="B",
         price=30,
-        special_offer_quantity=[
-            SpecialOfferQuantity(min_quantity=2, offer_price=45)
-        ],
+        special_offer_quantity=[SpecialOfferQuantity(min_quantity=2, offer_price=45)],
     ),
     "C": Item(
         name="C",
@@ -112,11 +110,14 @@ def checkout(skus: str) -> int:
         # initial value, no discount
         value = product.price * count
 
-        # check special offers
+        # check quantity special offers
         if product.special_offer_quantity:
             value = 0
             remaining_items = count
 
+            # sort the quantities by min quantity. The idea here is to fit
+            # the maximum amount of the largest min quantity, then we move
+            # on to the next quantity
             sorted_offers = sorted(
                 [item for item in product.special_offer_quantity],
                 key=operator.attrgetter("min_quantity"),
@@ -125,13 +126,11 @@ def checkout(skus: str) -> int:
 
             for special_offer in sorted_offers:
                 discount_price, remaining_items = process_quantity_offer(
-                        special_offer=special_offer,
-                        count=remaining_items,
+                    special_offer=special_offer,
+                    count=remaining_items,
                 )
-                value += discount_price
-                print(item_name, discount_price, value)
+                value += int(discount_price)
 
-            value = int(value)
             if remaining_items:
                 value += remaining_items * product.price
 
@@ -141,7 +140,10 @@ def checkout(skus: str) -> int:
                 free_items = math.floor(count / special_offer.min_quantity)
 
                 new_count = free_item_count - free_items if free_item_count else 0
-                grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
+                grouped_items[special_offer.free_item] = (
+                    new_count if new_count > 0 else 0
+                )
 
         total += value
     return total
+
