@@ -45,15 +45,19 @@ STOCK = {
 def checkout(skus: str) -> int:
     total = 0
 
-    # Counter will give the count of each product
+    # Counter will give the count of each item
     grouped_items = Counter(skus)
-    for item in skus:
+
+    for item_name, count in grouped_items:
         try:
-            product = STOCK[item]
+            product = STOCK[item_name]
         except KeyError:
             return -1
+
+        # check special offers
         total += product.value
     return total
+
 
 
 
