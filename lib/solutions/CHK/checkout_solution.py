@@ -8,7 +8,7 @@ from typing import Optional
 class SpecialOffer:
     quantity: int = 0
     offer: int = 0
-    free: Optional[str] = None
+    free_item: Optional[str] = None
 
 
 @dataclasses.dataclass
@@ -94,9 +94,15 @@ def checkout(skus: str) -> int:
                 items_without_offer = remaining_products * product.value
                 items_with_offer = discounted_items * special_offer.offer
                 value = int(items_with_offer + items_without_offer)
+            elif special_offer.free_item:
+                free_item_count = grouped_items.get(special_offer.free_item)
+            else:
+                value = product.value * count
+
         else:
             value = product.value * count
         total += value
     return total
+
 
 
