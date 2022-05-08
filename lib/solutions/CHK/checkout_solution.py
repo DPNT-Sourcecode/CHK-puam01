@@ -5,16 +5,14 @@ from typing import List, Optional
 
 
 @dataclasses.dataclass
-class SpecialOffer:
-    quantity: int = 0
-    offer: int = 0
-    free_item: Optional[str] = None
+class SpecialOfferQuantity:
+    min_quantity: int = 0
+    offer_price: int = 0
 
 
 @dataclasses.dataclass
-class SpecialOffer:
-    quantity: int = 0
-    offer: int = 0
+class SpecialOfferFree:
+    min_quantity: int = 0
     free_item: Optional[str] = None
 
 
@@ -22,7 +20,8 @@ class SpecialOffer:
 class Item:
     name: str
     value: int
-    special_offer: List[SpecialOffer] = dataclasses.field(default_factory=list)
+    special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(default_factory=list)
+    special_offer_free: List[SpecialOfferFree] = dataclasses.field(default_factory=list)
 
 
 STOCK = {
@@ -135,4 +134,5 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
