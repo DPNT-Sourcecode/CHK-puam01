@@ -38,6 +38,7 @@ STOCK = {
         name="G",
         price=20,
     ),
+    # H
     "I": Item(
         name="I",
         price=35,
@@ -46,7 +47,33 @@ STOCK = {
         name="J",
         price=60,
     ),
+    # K
+    "L": Item(
+        name="L",
+        price=90,
+    ),
+    "M": Item(
+        name="M",
+        price=15,
+    ),
+    # N
+    "O": Item(
+        name="O",
+        price=10,
+    ),
+    # P
+    # Q
+    # R
+    "S": Item(
+        name="S",
+        price=30,
+    ),
+    "O": Item(
+        name="O",
+        price=10,
+    ),
 }
+
 
 
 
