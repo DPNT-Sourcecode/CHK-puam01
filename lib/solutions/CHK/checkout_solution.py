@@ -15,7 +15,7 @@ class SpecialOffer:
 class Item:
     name: str
     value: int
-    special_offer: List[SpecialOffer] = []
+    special_offer: List[SpecialOffer] = dataclasses.field(default_factory=list)
 
 
 STOCK = {
@@ -70,16 +70,12 @@ def process_special_offer(
     discounted_items = (
         math.floor(count / special_offer.quantity) if special_offer.offer else 0
     )
-    print(discounted_items)
     items_with_offer = discounted_items * special_offer.offer
-    print(items_with_offer)
 
     # number of items outside of the discount
     remaining_products = count - (discounted_items * special_offer.quantity)
-    print(remaining_products)
 
     items_without_offer = remaining_products * product.value
-    print(items_without_offer)
     return int(items_with_offer + items_without_offer)
 
 
@@ -132,6 +128,7 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
 
