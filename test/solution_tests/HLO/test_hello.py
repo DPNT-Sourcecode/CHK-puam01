@@ -1,6 +1,6 @@
 import pytest
 
-from solutions.HLO import hello
+from solutions.HLO import hello_solution
 
 
 @pytest.mark.parametrize(
@@ -10,6 +10,7 @@ from solutions.HLO import hello
         ("Mr. X", "Hello, World!"),
     )
 )
-def test_sum(x: int, y: int, expected: int):
-    assert hello.compute(x, y) == expected
+def test_sum(friend_name: str, expected: str):
+    assert hello_solution.hello(friend_name) == expected
+
 
