@@ -20,7 +20,9 @@ class SpecialOfferFree:
 class Item:
     name: str
     value: int
-    special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(default_factory=list)
+    special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(
+        default_factory=list
+    )
     special_offer_free: List[SpecialOfferFree] = dataclasses.field(default_factory=list)
 
 
@@ -28,28 +30,28 @@ STOCK = {
     "A": Item(
         name="A",
         value=50,
-        special_offer=[
-            SpecialOffer(quantity=3, offer=130),
-            SpecialOffer(quantity=5, offer=200),
+        special_offer_quantity=[
+            SpecialOfferQuantity(min_quantity=3, offer_price=130),
+            SpecialOfferQuantity(min_quantity=5, offer_price=200),
         ],
     ),
     "B": Item(
-        name="A",
+        name="B",
         value=30,
-        special_offer=[SpecialOffer(quantity=2, offer=45)],
+        special_offer_quantity=[SpecialOfferQuantity(min_quantity=2, offer_price=45)],
     ),
     "C": Item(
-        name="A",
+        name="C",
         value=20,
     ),
     "D": Item(
-        name="A",
+        name="D",
         value=15,
     ),
     "E": Item(
         name="E",
         value=40,
-        special_offer=[SpecialOffer(quantity=2, free_item="B")],
+        special_offer_free=[SpecialOfferFree(min_quantity=2, free_item="B")],
     ),
 }
 
@@ -62,8 +64,11 @@ def all_items_allowed(items: set) -> bool:
     return len(items - ALLOWED_ITEMS) == 0
 
 
-def process_special_offer(
-    special_offer: SpecialOffer, product: Item, count: int, grouped_items: Counter
+def process_quantity_offer(
+    special_offer: SpecialOfferQuantity,
+    product: Item,
+    count: int,
+    grouped_items: Counter
 ) -> int:
     if special_offer.free_item:
         free_item_count = grouped_items.get(special_offer.free_item)
@@ -114,13 +119,13 @@ def checkout(skus: str) -> int:
         count = grouped_items[item_name]
         special_offers = product.special_offer
         # check special offers
-        if special_offers:
+        if product.special_offer_quantity:
             value = math.inf
 
             for special_offer in special_offers:
                 value = min(
                     value,
-                    process_special_offer(
+                    process_special_offer_quatity(
                         special_offer=special_offer,
                         count=count,
                         product=product,
@@ -134,5 +139,6 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
