@@ -131,6 +131,8 @@ def checkout(skus: str) -> int:
                 )
                 value += int(discount_price)
 
+            # If there are remaining items without discount, we add them with
+            # the full price
             if remaining_items:
                 value += remaining_items * product.price
 
@@ -146,4 +148,5 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
