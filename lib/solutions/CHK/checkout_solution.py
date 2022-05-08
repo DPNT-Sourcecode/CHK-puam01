@@ -65,7 +65,7 @@ STOCK = {
 }
 
 ALLOWED_ITEMS = set(STOCK.keys())
-PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
+PROCESS_ITEMS_ORDER = ("F", "E", "A", "B", "C", "D")
 
 
 def all_items_allowed(items: set) -> bool:
@@ -117,7 +117,6 @@ def checkout(skus: str) -> int:
             for special_offer in product.special_offer_free:
                 free_item_count = grouped_items.get(special_offer.free_item)
                 free_items = math.floor(count / special_offer.min_quantity)
-                print(free_items)
 
                 new_count = free_item_count - free_items if free_item_count else 0
                 grouped_items[special_offer.free_item] = (
@@ -157,3 +156,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
