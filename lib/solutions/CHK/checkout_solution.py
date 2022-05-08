@@ -64,6 +64,7 @@ def process_quantity_offer(
     return discounted_price, remaining_items
 
 
+from icecream import ic
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -148,6 +149,12 @@ def checkout(skus: str) -> int:
 
         total += value
 
+    grouped_items_count = [
+        {item_name: count}
+        for item_name, count in items_count_by_name.items()
+        if item_name in GROUP_ITEMS
+    ]
+    ic(grouped_items_count)
     for item_name in GROUP_ITEMS:
         # Get the count from grouped items and process if any
         count = items_count_by_name.get(item_name)
@@ -164,5 +171,6 @@ def checkout(skus: str) -> int:
         total += value
 
     return total
+
 
 
