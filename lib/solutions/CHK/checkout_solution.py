@@ -68,15 +68,7 @@ def process_quantity_offer(
     special_offer: SpecialOfferQuantity,
     product: Item,
     count: int,
-    grouped_items: Counter
 ) -> int:
-    if special_offer.free_item:
-        free_item_count = grouped_items.get(special_offer.free_item)
-        free_items = math.floor(count / special_offer.quantity)
-
-        new_count = free_item_count - free_items if free_item_count else 0
-        grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
-
     # Get number of discounted items if there's an offer
     discounted_items = (
         math.floor(count / special_offer.quantity) if special_offer.offer else 0
@@ -117,28 +109,37 @@ def checkout(skus: str) -> int:
             return -1
 
         count = grouped_items[item_name]
-        special_offers = product.special_offer
+
+        # initial value, no discount
+        value = product.value * count
+
         # check special offers
         if product.special_offer_quantity:
             value = math.inf
 
-            for special_offer in special_offers:
+            for special_offer in product.special_offer_quantity:
                 value = min(
                     value,
-                    process_special_offer_quatity(
+                    process_quantity_offer(
                         special_offer=special_offer,
                         count=count,
                         product=product,
-                        grouped_items=grouped_items,
                     ),
                 )
 
             value = int(value)
 
-        else:
-            value = product.value * count
+        if product.special_offer_free:
+            if special_offer.free_item:
+                free_item_count = grouped_items.get(special_offer.free_item)
+                free_items = math.floor(count / special_offer.quantity)
+
+                new_count = free_item_count - free_items if free_item_count else 0
+                grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
+
         total += value
     return total
+
 
 
 
