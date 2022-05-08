@@ -12,6 +12,13 @@ class SpecialOffer:
 
 
 @dataclasses.dataclass
+class SpecialOffer:
+    quantity: int = 0
+    offer: int = 0
+    free_item: Optional[str] = None
+
+
+@dataclasses.dataclass
 class Item:
     name: str
     value: int
@@ -128,3 +135,4 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
