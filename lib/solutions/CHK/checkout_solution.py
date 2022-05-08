@@ -56,7 +56,7 @@ def checkout(skus: str) -> int:
 
         count = grouped_items[item_name]
         # check special offers
-        if product.special_offer and count % product.special_offer.quantity == 0:
+        if product.special_offer and count > product.special_offer.quantity:
             value = int(
                     (count / product.special_offer.quantity)
                     * product.special_offer.offer
@@ -65,4 +65,5 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
