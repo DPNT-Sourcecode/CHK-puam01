@@ -1,13 +1,17 @@
 import math
 import operator
 from collections import Counter
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from .models import Item, SpecialOfferQuantity, SpecialOfferFree
 from .database import STOCK
 
 
 ALLOWED_ITEMS = set(STOCK.keys())
+
+
+def items_process_order(items: Dict[str, Item]):
+
 PROCESS_ITEMS_ORDER = ("F", "E", "A", "B", "C", "D")
 
 
@@ -114,6 +118,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
