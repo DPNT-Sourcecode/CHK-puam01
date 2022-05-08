@@ -1,5 +1,6 @@
 import dataclasses
 import math
+import operator
 from collections import Counter
 from typing import List, Optional, Tuple
 
@@ -114,7 +115,10 @@ def checkout(skus: str) -> int:
             value = 0
             remaining_items = count
 
-            quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
+            quantities = sorted(
+                [item for item in product.special_offer_quantity],
+                key=operator.attrgetter("min_quantity"),
+            )
 
             for min_quantity in quantities:
                 discount_price, remaining_items = process_quantity_offer(
@@ -134,5 +138,6 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
