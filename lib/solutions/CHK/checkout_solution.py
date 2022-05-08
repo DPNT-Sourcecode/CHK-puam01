@@ -127,8 +127,9 @@ def checkout(skus: str) -> int:
                 )
 
             value = int(value)
+            print(item_name, value, remaining_items)
             if remaining_items:
-                value += count + product.price
+                value += remaining_items * product.price
 
         if product.special_offer_free:
             if special_offer.free_item:
@@ -140,6 +141,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
