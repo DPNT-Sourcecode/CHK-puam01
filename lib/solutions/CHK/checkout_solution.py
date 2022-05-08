@@ -94,7 +94,7 @@ def checkout(skus: str) -> int:
                     new_count if new_count > 0 else 0
                 )
 
-            # Apply discount if there's an offer
+            # Get number of discounted items if there's an offer
             discounted_items = (
                 math.floor(count / special_offer.quantity) if special_offer.offer else 0
             )
@@ -109,9 +109,9 @@ def checkout(skus: str) -> int:
 
         else:
             value = product.value * count
-        print(item_name, value)
         total += value
     return total
+
 
 
 
