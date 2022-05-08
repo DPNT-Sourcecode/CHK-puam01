@@ -76,8 +76,7 @@ def process_quantity_offer(
     # number of items outside of the discount
     remaining_products = count - (discounted_items * special_offer.min_quantity)
 
-    items_without_offer = remaining_products * product.value
-    return int(items_with_offer + items_without_offer)
+    return items_with_offer, remaining_products
 
 
 # noinspection PyUnusedLocal
@@ -137,6 +136,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
