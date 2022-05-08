@@ -59,6 +59,11 @@ def checkout(skus: str) -> int:
         # check special offers
         if product.special_offer and count > product.special_offer.quantity:
             number_of_discount = math.floor(count / product.special_offer.quantity)
+
+            # number of items outside of the discount
+            remaining_products = count - (number_of_discount * product.special_offer.quantity)
+
+            items_without_offer = remaining_products * product.value
             value = int(
                 (count / product.special_offer.quantity) * product.special_offer.offer
             )
@@ -66,6 +71,7 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
 
