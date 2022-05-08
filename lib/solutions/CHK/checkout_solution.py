@@ -114,12 +114,18 @@ def checkout(skus: str) -> int:
             return -1
 
         count = grouped_items[item_name]
-        special_offer = product.special_offer
+        special_offers = product.special_offer
         # check special offers
-        if special_offer and count >= special_offer.quantity:
+        if special_offers:
+            value = math.inf
+            for special_offer in special_offers:
+                value = min(value, process_special_offer(special_offer))
+
+            value = int(value)
 
         else:
             value = product.value * count
         total += value
     return total
+
 
