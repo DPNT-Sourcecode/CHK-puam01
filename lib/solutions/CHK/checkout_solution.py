@@ -22,9 +22,7 @@ def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
         else:
             normal_items.append(item.name)
 
-    return tuple(
-        items_with_free_offer + items_with_quantity_offer + normal_items
-    )
+    return tuple(items_with_free_offer + items_with_quantity_offer + normal_items)
 
 
 PROCESS_ITEMS_ORDER = items_process_order(STOCK)
@@ -133,3 +131,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
