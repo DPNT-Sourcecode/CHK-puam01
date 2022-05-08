@@ -24,6 +24,3 @@ from solutions.CHK import checkout_solution
 )
 def test_sum(skus: str, expected: int):
     assert checkout_solution.checkout(skus) == expected
-
-
-
