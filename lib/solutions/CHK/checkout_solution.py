@@ -43,7 +43,7 @@ PROCESS_ITEMS_ORDER = items_process_order(STOCK)
 
 
 GROUP_ITEMS = tuple([item.name for item in STOCK.values() if item.group_item])
-MIN_GROUP_ITEMS = 3   # for simplicity, just a global variable
+MIN_GROUP_ITEMS = 3  # for simplicity, just a global variable
 GROUP_ITEMS_PRICE = 45  # for simplicity, just a global variable
 
 
@@ -98,7 +98,7 @@ def process_group_items(items_count_by_name: Dict[str, int]) -> int:
         if times_discount_applied != total_discount_items:
             discount_items_changed = True
             times_discount_applied = total_discount_items
-            partial_sum = GROUP_ITEMS_PRICE
+            partial_sum = GROUP_ITEMS_PRICE * total_discount_items
 
         # number of items outside of the discount
         remaining_items = total_items - (total_discount_items * MIN_GROUP_ITEMS)
@@ -196,5 +196,6 @@ def checkout(skus: str) -> int:
 
     total += process_group_items(items_count_by_name)
     return total
+
 
 
