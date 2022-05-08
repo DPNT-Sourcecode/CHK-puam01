@@ -38,6 +38,15 @@ STOCK = {
         name="G",
         price=20,
     ),
+    "I": Item(
+        name="I",
+        price=35,
+    ),
+    "J": Item(
+        name="J",
+        price=60,
+    ),
 }
+
 
 
