@@ -92,7 +92,11 @@ STOCK = {
             SpecialOfferQuantity(min_quantity=3, offer_price=80),
         ],
     ),
-    # R
+    "R": Item(
+        name="R",
+        price=50,
+        special_offer_free=[SpecialOfferFree(min_quantity=3, free_item="Q")],
+    ),
     "S": Item(
         name="S",
         price=30,
@@ -120,4 +124,5 @@ STOCK = {
         price=50,
     ),
 }
+
 
