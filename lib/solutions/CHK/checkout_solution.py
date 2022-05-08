@@ -1,3 +1,19 @@
+import dataclasses
+
+
+@dataclasses.dataclass
+class SpecialOffer:
+    quantity: int = 0
+    offer: int = 0
+
+
+@dataclasses.dataclass
+class Item:
+    name: str
+    value: int
+    special_offer: SpecialOffer
+
+
 STOCK = {
     "A": 50,
     "B": 30,
@@ -17,3 +33,4 @@ def checkout(skus: str) -> int:
             return -1
         total += value
     return total
+
