@@ -68,11 +68,30 @@ STOCK = {
         name="S",
         price=30,
     ),
-    "O": Item(
-        name="O",
+    "T": Item(
+        name="T",
+        price=20,
+    ),
+    # U
+    # V
+    "W": Item(
+        name="W",
+        price=20,
+    ),
+    "X": Item(
+        name="X",
+        price=90,
+    ),
+    "Y": Item(
+        name="Y",
         price=10,
     ),
+    "Z": Item(
+        name="Z",
+        price=50,
+    ),
 }
+
 
 
 
