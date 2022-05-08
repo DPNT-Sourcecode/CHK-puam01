@@ -46,7 +46,7 @@ STOCK = {
     ),
 }
 
-
+ALLOWED_ITEMS = set(STOCK.keys())
 PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
 
 
@@ -57,6 +57,8 @@ def checkout(skus: str) -> int:
 
     # Counter will give the count of each item
     grouped_items = Counter(skus)
+
+    items_name = set(grouped_items.keys())
 
     # We need to process the items that have free special offer first,
     # so the order is import
@@ -87,6 +89,7 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
 
