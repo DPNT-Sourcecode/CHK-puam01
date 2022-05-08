@@ -98,19 +98,23 @@ def checkout(skus: str) -> int:
             discounted_items = (
                 math.floor(count / special_offer.quantity) if special_offer.offer else 0
             )
+            print(discounted_items)
+            items_with_offer = discounted_items * special_offer.offer
+            print(items_with_offer)
 
             # number of items outside of the discount
             remaining_products = count - (discounted_items * special_offer.quantity)
             print(remaining_products)
 
             items_without_offer = remaining_products * product.value
-            items_with_offer = discounted_items * special_offer.offer
+            print(items_without_offer)
             value = int(items_with_offer + items_without_offer)
 
         else:
             value = product.value * count
         total += value
     return total
+
 
 
 
