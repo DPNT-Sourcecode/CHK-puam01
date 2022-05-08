@@ -47,6 +47,9 @@ STOCK = {
 }
 
 
+PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
+
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -55,7 +58,7 @@ def checkout(skus: str) -> int:
     # Counter will give the count of each item
     grouped_items = Counter(skus)
 
-    for item_name in grouped_items:
+    for item_name in PROCESS_ITEMS_ORDER:
         try:
             product = STOCK[item_name]
         except KeyError:
@@ -77,5 +80,6 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+
 
 
