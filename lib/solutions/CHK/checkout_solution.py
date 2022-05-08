@@ -42,7 +42,7 @@ STOCK = {
     "E": Item(
         name="E",
         value=40,
-        special_offer=SpecialOffer(free_item="B"),
+        special_offer=SpecialOffer(quantity=2, free_item="B"),
     ),
 }
 
@@ -84,8 +84,8 @@ def checkout(skus: str) -> int:
         count = grouped_items[item_name]
         special_offer = product.special_offer
         # check special offers
-        if special_offer:
-            if special_offer.free_item:
+        if special_offer and special_offer.quantity:
+            if special_offer.free_item and count >= special_offer.quantity:
                 free_item_count = grouped_items.get(special_offer.free_item)
                 new_count = free_item_count - count if free_item_count else 0
                 grouped_items[special_offer.free_item] = new_count if new_count > 0 else 0
@@ -107,11 +107,3 @@ def checkout(skus: str) -> int:
         print(item_name, value)
         total += value
     return total
-
-
-
-
-
-
-
-
