@@ -80,7 +80,7 @@ from solutions.CHK import checkout_solution
         #  ("X", 17),
         #  ("Y", 20),
         ("Z", 21),
-        ("ZY", 21),
+        ("YZ", 21),
     )
 )
 def test_checkout(skus: str, expected: int):
@@ -97,5 +97,6 @@ def test_checkout(skus: str, expected: int):
 )
 def test_allowed_keys(items, expected):
     assert checkout_solution.all_items_allowed(items) == expected
+
 
 
