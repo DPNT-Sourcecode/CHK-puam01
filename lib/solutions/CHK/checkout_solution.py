@@ -70,13 +70,11 @@ def process_quantity_offer(
     count: int,
 ) -> int:
     # Get number of discounted items if there's an offer
-    discounted_items = (
-        math.floor(count / special_offer.quantity) if special_offer.offer else 0
-    )
-    items_with_offer = discounted_items * special_offer.offer
+    discounted_items = math.floor(count / special_offer.min_quantity)
+    items_with_offer = discounted_items * special_offer.offer_price
 
     # number of items outside of the discount
-    remaining_products = count - (discounted_items * special_offer.quantity)
+    remaining_products = count - (discounted_items * special_offer.min_quantity)
 
     items_without_offer = remaining_products * product.value
     return int(items_with_offer + items_without_offer)
@@ -139,6 +137,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
