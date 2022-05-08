@@ -161,24 +161,14 @@ def checkout(skus: str) -> int:
         key=lambda item: item.get("price"),
         reverse=True,
     )
-    for item_name in GROUP_ITEMS:
-        # Get the count from grouped items and process if any
-        count = items_count_by_name.get(item_name)
-        if not count:
-            continue
 
-        try:
-            product = STOCK[item_name]
-        except KeyError:
-            return -1
+    total_items = 0
+    partial_sum = 0
+
+    for item in grouped_items_count:
 
         # initial value, no discount
-        value = product.price * count
-        total += value
+        value = item["price"] * item["count"]
+        partial_sum += value
 
     return total
-
-
-
-
-
