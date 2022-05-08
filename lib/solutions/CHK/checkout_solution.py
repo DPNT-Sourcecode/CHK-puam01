@@ -5,7 +5,6 @@ STOCK = {
     "D": 15,
 }
 
-ALLOWED_PRODUCTS = set(STOCK.keys())
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -16,7 +15,9 @@ def checkout(skus: str) -> int:
             value = STOCK[product]
         except KeyError:
             return -1
+        total += value
     return total
+
 
 
 
