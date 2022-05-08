@@ -1,7 +1,7 @@
 import dataclasses
 import math
 from collections import Counter
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 
 @dataclasses.dataclass
@@ -66,17 +66,16 @@ def all_items_allowed(items: set) -> bool:
 
 def process_quantity_offer(
     special_offer: SpecialOfferQuantity,
-    product: Item,
     count: int,
-) -> int:
+) -> Tuple[int, int]:
     # Get number of discounted items if there's an offer
     discounted_items = math.floor(count / special_offer.min_quantity)
     items_with_offer = discounted_items * special_offer.offer_price
 
     # number of items outside of the discount
-    remaining_products = count - (discounted_items * special_offer.min_quantity)
+    remaining_items = count - (discounted_items * special_offer.min_quantity)
 
-    return items_with_offer, remaining_products
+    return items_with_offer, remaining_items
 
 
 # noinspection PyUnusedLocal
@@ -114,14 +113,12 @@ def checkout(skus: str) -> int:
         if product.special_offer_quantity:
             value = math.inf
 
+            quantities = sorted([item.min_quantity for item in product.special_offer_quantity])
+
             for special_offer in product.special_offer_quantity:
-                value = min(
-                    value,
                     process_quantity_offer(
                         special_offer=special_offer,
                         count=count,
-                        product=product,
-                    ),
                 )
 
             value = int(value)
@@ -136,9 +133,3 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
-
-
-
-
-
-
