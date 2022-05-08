@@ -104,8 +104,10 @@ def checkout(skus: str) -> int:
 
         else:
             value = product.value * count
+        print(item_name, value)
         total += value
     return total
+
 
 
 
