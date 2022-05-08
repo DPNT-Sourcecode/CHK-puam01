@@ -7,7 +7,8 @@ STOCK = {
 
 # noinspection PyUnusedLocal
 # skus = unicode string
-def checkout(skus: str):
-    raise NotImplementedError()
+def checkout(skus: str) -> int:
+    return -1
+
 
 
