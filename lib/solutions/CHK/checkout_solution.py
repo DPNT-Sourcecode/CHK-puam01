@@ -20,7 +20,7 @@ class SpecialOfferFree:
 @dataclasses.dataclass
 class Item:
     name: str
-    value: int
+    price: int
     special_offer_quantity: List[SpecialOfferQuantity] = dataclasses.field(
         default_factory=list
     )
@@ -30,7 +30,7 @@ class Item:
 STOCK = {
     "A": Item(
         name="A",
-        value=50,
+        price=50,
         special_offer_quantity=[
             SpecialOfferQuantity(min_quantity=3, offer_price=130),
             SpecialOfferQuantity(min_quantity=5, offer_price=200),
@@ -38,20 +38,20 @@ STOCK = {
     ),
     "B": Item(
         name="B",
-        value=30,
+        price=30,
         special_offer_quantity=[SpecialOfferQuantity(min_quantity=2, offer_price=45)],
     ),
     "C": Item(
         name="C",
-        value=20,
+        price=20,
     ),
     "D": Item(
         name="D",
-        value=15,
+        price=15,
     ),
     "E": Item(
         name="E",
-        value=40,
+        price=40,
         special_offer_free=[SpecialOfferFree(min_quantity=2, free_item="B")],
     ),
 }
@@ -108,25 +108,27 @@ def checkout(skus: str) -> int:
         count = grouped_items[item_name]
 
         # initial value, no discount
-        value = product.value * count
+        value = product.price * count
 
         # check special offers
         if product.special_offer_quantity:
             value = 0
             remaining_items = count
 
-            quantities = sorted(
+            sorted_offers = sorted(
                 [item for item in product.special_offer_quantity],
                 key=operator.attrgetter("min_quantity"),
             )
 
-            for min_quantity in quantities:
+            for special_offer in sorted_offers:
                 discount_price, remaining_items = process_quantity_offer(
                         special_offer=special_offer,
                         count=remaining_items,
                 )
 
             value = int(value)
+            if remaining_items:
+                value += count + product.price
 
         if product.special_offer_free:
             if special_offer.free_item:
@@ -138,6 +140,7 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
 
 
 
