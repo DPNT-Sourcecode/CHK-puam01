@@ -100,10 +100,12 @@ STOCK = {
     "S": Item(
         name="S",
         price=20,
+        group_item=True,
     ),
     "T": Item(
         name="T",
         price=20,
+        group_item=True,
     ),
     "U": Item(
         name="U",
@@ -126,16 +128,20 @@ STOCK = {
     ),
     "X": Item(
         name="X",
-        price=90,
+        price=17,
+        group_item=True,
     ),
     "Y": Item(
         name="Y",
-        price=10,
+        price=20,
+        group_item=True,
     ),
     "Z": Item(
         name="Z",
-        price=50,
+        price=21,
+        group_item=True,
     ),
 }
+
 
 
