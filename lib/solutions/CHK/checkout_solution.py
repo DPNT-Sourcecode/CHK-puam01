@@ -51,8 +51,8 @@ PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
 
 
 def all_items_allowed(items: set) -> bool:
-    """Make sure all items are allowed"""
-    return len(items - ALLOWED_ITEMS)
+    """Make sure all items are allowed."""
+    return len(items - ALLOWED_ITEMS) == 0
 
 
 # noinspection PyUnusedLocal
@@ -96,3 +96,4 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
+

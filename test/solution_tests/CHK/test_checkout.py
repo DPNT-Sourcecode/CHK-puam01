@@ -7,20 +7,20 @@ from solutions.CHK import checkout_solution
     "skus, expected",
     (
         ("", 0),  # no product
-        ("x", -1),  # invalid
-        ("a", 50),
-        ("b", 30),
-        ("c", 20),
-        ("d", 15),
-        ("e", 40),
-        ("ab", 80),  # two items
-        ("aa", 100),  # a discount
-        ("aaa", 130),  # a discount
-        ("aaaa", 180),  # 4 items, no discount?
-        ("aaaaaa", 260),  # a discount
-        ("bb", 45),  # b discount
-        ("aaabb", 175),
-        ("aabb", 145),
+        ("X", -1),  # invalid
+        ("A", 50),
+        ("B", 30),
+        ("C", 20),
+        ("D", 15),
+        ("E", 40),
+        ("AB", 80),  # two items
+        ("AA", 100),  # A discount
+        ("AAA", 130),  # A discount
+        ("AAAA", 180),  # 4 items, no discount?
+        ("AAAAAA", 260),  # A discount
+        ("BB", 45),  # B discount
+        ("AAABB", 175),
+        ("AABB", 145),
     )
 )
 def test_sum(skus: str, expected: int):
@@ -28,12 +28,13 @@ def test_sum(skus: str, expected: int):
 
 
 @pytest.mark.parametrize(
-    "allowed, received, expected",
+    "items, expected",
     (
-        ({"A", "B", "C"}, {"A", "B", "C"}, True),  # no product
-        ({"A", "B", "C"}, {"A", "B"}, True),
-        ({"A", "B", "C"}, {"x", "B", "C"}, False),
+        (checkout_solution.ALLOWED_ITEMS, True),
+        ({"A", "B"}, True),
+        ({"x", "B", "C"}, False),
     )
 )
-def test_allowed_keys(skus: str, expected: int):
-    assert checkout_solution.checkout(skus) == expected
+def test_allowed_keys(allowed, items, expected):
+    assert checkout_solution.all_items_allowed(items) == expected
+
