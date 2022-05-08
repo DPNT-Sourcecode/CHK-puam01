@@ -50,6 +50,11 @@ ALLOWED_ITEMS = set(STOCK.keys())
 PROCESS_ITEMS_ORDER = ("E", "A", "B", "C", "D")
 
 
+def all_items_allowed(items: set) -> bool:
+    """Make sure all items are allowed"""
+    return len(items - ALLOWED_ITEMS)
+
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
@@ -58,7 +63,9 @@ def checkout(skus: str) -> int:
     # Counter will give the count of each item
     grouped_items = Counter(skus)
 
-    items_name = set(grouped_items.keys())
+    items = set(grouped_items.keys())
+    if not all_items_allowed(items):
+        return -1
 
     # We need to process the items that have free special offer first,
     # so the order is import
@@ -89,8 +96,3 @@ def checkout(skus: str) -> int:
             value = product.value * count
         total += value
     return total
-
-
-
-
-
