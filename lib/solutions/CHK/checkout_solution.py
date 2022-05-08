@@ -58,7 +58,9 @@ STOCK = {
     "F": Item(
         name="F",
         price=10,
-        special_offer_free=[SpecialOfferFree(min_quantity=2, free_item="F")],
+        special_offer_free=[
+            SpecialOfferFree(min_quantity=2, basket_quantity=3, free_item="F")
+        ],
     ),
 }
 
@@ -111,6 +113,17 @@ def checkout(skus: str) -> int:
         except KeyError:
             return -1
 
+        if product.special_offer_free:
+            for special_offer in product.special_offer_free:
+                free_item_count = grouped_items.get(special_offer.free_item)
+                free_items = math.floor(count / special_offer.min_quantity)
+                print(free_items)
+
+                new_count = free_item_count - free_items if free_item_count else 0
+                grouped_items[special_offer.free_item] = (
+                    new_count if new_count > 0 else 0
+                )
+
         count = grouped_items[item_name]
 
         # initial value, no discount
@@ -142,18 +155,5 @@ def checkout(skus: str) -> int:
             if remaining_items:
                 value += remaining_items * product.price
 
-        if product.special_offer_free:
-            for special_offer in product.special_offer_free:
-                free_item_count = grouped_items.get(special_offer.free_item)
-                free_items = math.floor(count / special_offer.min_quantity)
-
-                new_count = free_item_count - free_items if free_item_count else 0
-                grouped_items[special_offer.free_item] = (
-                    new_count if new_count > 0 else 0
-                )
-
         total += value
     return total
-
-
-
