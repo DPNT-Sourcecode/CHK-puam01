@@ -11,6 +11,20 @@ ALLOWED_ITEMS = set(STOCK.keys())
 
 
 def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
+    """Order the items into the processing order.
+
+    Some items need to be processed earlier as they the result will
+    affect other processing.
+
+    The order is:
+
+    - Special item free
+    - Special item quantity
+    - Normal items
+
+    Group items are excluded from this order as they will have their own
+    processing.
+    """
     items_with_free_offer = []
     items_with_quantity_offer = []
     normal_items = []
@@ -19,7 +33,7 @@ def items_process_order(items: Dict[str, Item]) -> Tuple[str]:
             items_with_free_offer.append(item.name)
         elif item.special_offer_quantity:
             items_with_quantity_offer.append(item.name)
-        else:
+        elif not item.group_item:
             normal_items.append(item.name)
 
     return tuple(items_with_free_offer + items_with_quantity_offer + normal_items)
@@ -131,3 +145,4 @@ def checkout(skus: str) -> int:
 
         total += value
     return total
+
